@@ -19,6 +19,12 @@ namespace SwapFolders
         public Form1()
         {
             InitializeComponent();
+
+           
+            listView.SmallImageList = imageList1;
+            listView.LargeImageList = imageList1;
+            listView.Items.Add("1", 0);
+            listView.Items.Add("2", 1);
         }
 
         void RestartExplorer()
@@ -33,7 +39,7 @@ namespace SwapFolders
 
         void SwapIcon()
         {
-            DirectoryInfo folder = new DirectoryInfo($@"{textBox1.Text}\");
+            DirectoryInfo folder = new DirectoryInfo($@"{textBoxFile.Text}\");
             filePath = folder.FullName + "desktop.ini";
             File.Delete(filePath);
 
@@ -41,7 +47,7 @@ namespace SwapFolders
             {
                 file.WriteLine("[.ShellClassInfo]");
                 file.WriteLine(@"IconFile=D:\Swap Folders\icl\fColors.icl");
-                file.WriteLine("IconIndex = 3");
+                file.WriteLine($"IconIndex = {textNumberIcon.Text}");
             }
             folder.Attributes = folder.Attributes | FileAttributes.ReadOnly;
             File.SetAttributes(filePath, FileAttributes.Hidden | FileAttributes.System | FileAttributes.Archive);
@@ -49,9 +55,16 @@ namespace SwapFolders
             RestartExplorer();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonApply_Click(object sender, EventArgs e)
         {
-            SwapIcon();
+            try
+            {
+                SwapIcon();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void buttonOpenFIle_Click(object sender, EventArgs e)
@@ -59,8 +72,25 @@ namespace SwapFolders
             FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                textBox1.Text = folderBrowserDialog1.SelectedPath;
+                textBoxFile.Text = folderBrowserDialog1.SelectedPath;
             }
+        }
+
+        private void textBoxFile_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+        }
+
+        private void textBoxFile_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] file = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (Directory.Exists(file[0]))
+                textBoxFile.Text = file[0];
+            else
+                MessageBox.Show("Это не папка!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
     }
 }
