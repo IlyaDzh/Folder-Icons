@@ -15,17 +15,34 @@ namespace SwapFolders
     public partial class Form1 : Form
     {
         string filePath = "";
+        int filesInFolder;
 
         public Form1()
         {
             InitializeComponent();
 
-           
+            //
+            filesInFolder = CountFiles(@"D:\WindowsForms\SwapFolders\SwapFolders\Icons\Colors");
             listView.SmallImageList = imageList1;
             listView.LargeImageList = imageList1;
-            listView.Items.Add("1", 0);
-            listView.Items.Add("2", 1);
+            for (int i = 0; i < filesInFolder; i++)
+            {
+                listView.Items.Add($"{i}", i);
+            }
+            //
         }
+
+        int CountFiles(string path)
+        {
+            return new DirectoryInfo(path).GetFiles(@"*.*", SearchOption.AllDirectories).Length;
+        }
+
+        //
+        string[] PathIcon(string iconName)
+        {
+            return Directory.GetFiles(@"D:\WindowsForms\SwapFolders\SwapFolders\Icons\Colors", $@"{iconName}");
+        }
+        //
 
         void RestartExplorer()
         {
@@ -46,8 +63,11 @@ namespace SwapFolders
             using (StreamWriter file = new StreamWriter(filePath))
             {
                 file.WriteLine("[.ShellClassInfo]");
+                //file.WriteLine($@"IconResource={PathIcon(listView.SelectedItems[0].Name)},0");
+                //file.WriteLine(@"IconResource=D:\WindowsForms\SwapFolders\SwapFolders\Icons\Colors\yellow.ico,0");
+
                 file.WriteLine(@"IconFile=D:\Swap Folders\icl\fColors.icl");
-                file.WriteLine($"IconIndex = {textNumberIcon.Text}");
+                file.WriteLine($"IconIndex = {listView.SelectedIndices[0]}");
             }
             folder.Attributes = folder.Attributes | FileAttributes.ReadOnly;
             File.SetAttributes(filePath, FileAttributes.Hidden | FileAttributes.System | FileAttributes.Archive);
