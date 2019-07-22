@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.textBoxFile = new System.Windows.Forms.TextBox();
             this.buttonApply = new System.Windows.Forms.Button();
             this.buttonOpenFIle = new System.Windows.Forms.Button();
@@ -170,28 +169,9 @@
             // 
             // imageList1
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(38, 38);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "blue.ico");
-            this.imageList1.Images.SetKeyName(1, "coffee.ico");
-            this.imageList1.Images.SetKeyName(2, "dark gray.ico");
-            this.imageList1.Images.SetKeyName(3, "gray.ico");
-            this.imageList1.Images.SetKeyName(4, "green.ico");
-            this.imageList1.Images.SetKeyName(5, "light blue.ico");
-            this.imageList1.Images.SetKeyName(6, "lime.ico");
-            this.imageList1.Images.SetKeyName(7, "maroon.ico");
-            this.imageList1.Images.SetKeyName(8, "mint.ico");
-            this.imageList1.Images.SetKeyName(9, "navy.ico");
-            this.imageList1.Images.SetKeyName(10, "olive.ico");
-            this.imageList1.Images.SetKeyName(11, "orange.ico");
-            this.imageList1.Images.SetKeyName(12, "pink.ico");
-            this.imageList1.Images.SetKeyName(13, "purple.ico");
-            this.imageList1.Images.SetKeyName(14, "race blue.ico");
-            this.imageList1.Images.SetKeyName(15, "red.ico");
-            this.imageList1.Images.SetKeyName(16, "space.ico");
-            this.imageList1.Images.SetKeyName(17, "teal.ico");
-            this.imageList1.Images.SetKeyName(18, "white.ico");
-            this.imageList1.Images.SetKeyName(19, "yellow.ico");
             // 
             // openFileDialog1
             // 

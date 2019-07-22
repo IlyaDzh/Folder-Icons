@@ -22,28 +22,24 @@ namespace SwapFolders
         public Form1()
         {
             InitializeComponent();
-            
+
+            //Initialize listView1
             listView1.LargeImageList = imageList1;
+            DirectoryInfo dir1 = new DirectoryInfo(PATH_COLORS);
+            foreach (FileInfo file in dir1.GetFiles())
+            {
+                try
+                {
+                    imageList1.Images.Add(file.Name, Image.FromFile(file.FullName));
+                }
+                catch { }
+            }
             for (int i = 0; i < imageList1.Images.Count; i++)
             {
                 listView1.Items.Add($"{i}", i);
             }
 
-            //DirectoryInfo dir1 = new DirectoryInfo(PATH_COLORS);
-            //foreach (FileInfo file in dir1.GetFiles())
-            //{
-            //    try
-            //    {
-            //        imageList1.Images.Add(Image.FromFile(file.FullName));
-            //    }
-            //    catch { }
-            //}
-            //for (int i = 0; i < imageList1.Images.Count; i++)
-            //{
-            //    listView1.Items.Add($"{i}", i);
-            //}
-
-
+            //Initialize listView2
             myIconsList.ImageSize = new Size(38, 38);
             listView2.LargeImageList = myIconsList;
             DirectoryInfo dir = new DirectoryInfo(PATH_MY_ICONS);
@@ -51,7 +47,7 @@ namespace SwapFolders
             {
                 try
                 {
-                    myIconsList.Images.Add(Image.FromFile(file.FullName));
+                    myIconsList.Images.Add(file.Name, Image.FromFile(file.FullName));
                 }
                 catch { }
             }
@@ -61,9 +57,9 @@ namespace SwapFolders
             }
         }
         
-        string PathIcon(string iconName)
+        string PathIcon(string path, string iconName)
         {
-            return $@"{PATH_COLORS}\{iconName}";
+            return $@"{path}\{iconName}";
         }
 
         void RestartExplorer()
@@ -76,7 +72,7 @@ namespace SwapFolders
             Process.Start("explorer.exe");
         }
 
-        void SwapIcon()
+        void SwapIcon(string path, ImageList il, ListView lv)
         {
             DirectoryInfo folder = new DirectoryInfo($@"{textBoxFile.Text}\");
             filePath = folder.FullName + "desktop.ini";
@@ -85,7 +81,7 @@ namespace SwapFolders
             using (StreamWriter file = new StreamWriter(filePath))
             {
                 file.WriteLine("[.ShellClassInfo]");
-                file.WriteLine($@"IconResource={PathIcon(imageList1.Images.Keys[listView1.SelectedIndices[0]])}, 0");
+                file.WriteLine($@"IconResource={PathIcon(path, il.Images.Keys[lv.SelectedIndices[0]])}, 0");
             }
             folder.Attributes = folder.Attributes | FileAttributes.ReadOnly;
             File.SetAttributes(filePath, FileAttributes.Hidden | FileAttributes.System | FileAttributes.Archive);
@@ -97,7 +93,10 @@ namespace SwapFolders
         {
             try
             {
-                SwapIcon();
+                if (listView1.CanSelect)
+                    SwapIcon(PATH_COLORS, imageList1, listView1);
+                else if (listView2.CanSelect)
+                    SwapIcon(PATH_MY_ICONS, myIconsList, listView2);
             }
             catch (Exception ex)
             {
