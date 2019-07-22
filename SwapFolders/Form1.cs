@@ -22,41 +22,32 @@ namespace SwapFolders
         public Form1()
         {
             InitializeComponent();
-
-            //Initialize listView1
-            listView1.LargeImageList = imageList1;
-            DirectoryInfo dir1 = new DirectoryInfo(PATH_COLORS);
-            foreach (FileInfo file in dir1.GetFiles())
-            {
-                try
-                {
-                    imageList1.Images.Add(file.Name, Image.FromFile(file.FullName));
-                }
-                catch { }
-            }
-            for (int i = 0; i < imageList1.Images.Count; i++)
-            {
-                listView1.Items.Add($"{i}", i);
-            }
-
-            //Initialize listView2
+            
+            InitList(PATH_COLORS, imageList1, listView1);
+            
             myIconsList.ImageSize = new Size(38, 38);
-            listView2.LargeImageList = myIconsList;
-            DirectoryInfo dir = new DirectoryInfo(PATH_MY_ICONS);
+            myIconsList.ColorDepth = ColorDepth.Depth32Bit;
+            InitList(PATH_MY_ICONS, myIconsList, listView2);
+        }
+        
+        void InitList(string pathDir, ImageList il, ListView lv)
+        {
+            lv.LargeImageList = il;
+            DirectoryInfo dir = new DirectoryInfo(pathDir);
             foreach (FileInfo file in dir.GetFiles())
             {
                 try
                 {
-                    myIconsList.Images.Add(file.Name, Image.FromFile(file.FullName));
+                    il.Images.Add(file.Name, Image.FromFile(file.FullName));
                 }
                 catch { }
             }
-            for (int i = 0; i < myIconsList.Images.Count; i++)
+            for (int i = 0; i < il.Images.Count; i++)
             {
-                listView2.Items.Add($"{i}", i);
+                lv.Items.Add($"{i+1}", i);
             }
         }
-        
+
         string PathIcon(string path, string iconName)
         {
             return $@"{path}\{iconName}";
@@ -132,10 +123,13 @@ namespace SwapFolders
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            listView2.LargeImageList = myIconsList;
+            //скопировать выбранный файл в папку
+            //обновить list
+            //listView2.LargeImageList = myIconsList;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                myIconsList.Images.Add(Image.FromFile(openFileDialog1.FileName));
+                //File.Copy(openFileDialog1.FileName, $@"{PATH_MY_ICONS}\{openFileDialog1.FileName}");
+                //myIconsList.Images.Add(Image.FromFile(openFileDialog1.FileName));
             }
             listView2.Clear();
             for (int i = 0; i < myIconsList.Images.Count; i++)
