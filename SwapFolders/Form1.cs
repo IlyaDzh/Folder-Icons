@@ -19,17 +19,38 @@ namespace SwapFolders
         ImageList myIconsList = new ImageList();
         string filePath = "";
 
-        public Form1()
+        public Form1(string[] args)
         {
             InitializeComponent();
             
+            if (args.Length > 0)
+                InstallIcon(args[0], args[1]);
+
             InitList(PATH_COLORS, imageList1, listView1);
             
             myIconsList.ImageSize = new Size(38, 38);
             myIconsList.ColorDepth = ColorDepth.Depth32Bit;
             InitList(PATH_MY_ICONS, myIconsList, listView2);
         }
-        
+
+        void InstallIcon(string pathFile, string pathIcon)
+        {
+            DirectoryInfo folder = new DirectoryInfo($@"{pathFile}\");
+            string desktopFile = folder.FullName + "desktop.ini";
+            File.Delete(desktopFile);
+
+            using (StreamWriter file = new StreamWriter(desktopFile))
+            {
+                file.WriteLine("[.ShellClassInfo]");
+                file.WriteLine($@"IconResource={pathIcon}, 0");
+            }
+            folder.Attributes = folder.Attributes | FileAttributes.ReadOnly;
+            File.SetAttributes(desktopFile, FileAttributes.Hidden | FileAttributes.System | FileAttributes.Archive);
+
+            RestartExplorer();
+            Close();
+        }
+
         void InitList(string pathDir, ImageList il, ListView lv)
         {
             lv.LargeImageList = il;
@@ -79,6 +100,10 @@ namespace SwapFolders
 
             RestartExplorer();
         }
+
+        //
+        // Controller
+        //
 
         private void buttonApply_Click(object sender, EventArgs e)
         {

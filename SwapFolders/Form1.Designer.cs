@@ -43,11 +43,11 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.engToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -201,20 +201,8 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.languageToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
             this.optionsToolStripMenuItem.Text = "Options";
-            // 
-            // folderToolStripMenuItem
-            // 
-            this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
-            this.folderToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.folderToolStripMenuItem.Text = "Folder";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
             // 
             // languageToolStripMenuItem
             // 
@@ -222,20 +210,32 @@
             this.rusToolStripMenuItem,
             this.engToolStripMenuItem});
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            this.languageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.languageToolStripMenuItem.Text = "Language";
             // 
             // rusToolStripMenuItem
             // 
             this.rusToolStripMenuItem.Name = "rusToolStripMenuItem";
-            this.rusToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rusToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.rusToolStripMenuItem.Text = "Rus";
             // 
             // engToolStripMenuItem
             // 
             this.engToolStripMenuItem.Name = "engToolStripMenuItem";
-            this.engToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.engToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.engToolStripMenuItem.Text = "Eng";
+            // 
+            // folderToolStripMenuItem
+            // 
+            this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
+            this.folderToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
+            this.folderToolStripMenuItem.Text = "Folder";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
+            this.aboutToolStripMenuItem.Text = "About";
             // 
             // Form1
             // 
