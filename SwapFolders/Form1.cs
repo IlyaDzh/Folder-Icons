@@ -24,7 +24,7 @@ namespace SwapFolders
             InitializeComponent();
             
             if (args.Length > 0)
-                InstallIcon(args[0], args[1]);
+                ChangeIcon(args[0], args[1]);
 
             InitList(PATH_COLORS, imageList1, listView1);
             
@@ -33,7 +33,7 @@ namespace SwapFolders
             InitList(PATH_MY_ICONS, myIconsList, listView2);
         }
 
-        void InstallIcon(string pathFile, string pathIcon)
+        void ChangeIcon(string pathFile, string pathIcon)
         {
             DirectoryInfo folder = new DirectoryInfo($@"{pathFile}\");
             string desktopFile = folder.FullName + "desktop.ini";
@@ -47,7 +47,7 @@ namespace SwapFolders
             folder.Attributes = folder.Attributes | FileAttributes.ReadOnly;
             File.SetAttributes(desktopFile, FileAttributes.Hidden | FileAttributes.System | FileAttributes.Archive);
 
-            RestartExplorer();
+            RestartExplorer(pathFile);
             Close();
         }
 
@@ -69,19 +69,14 @@ namespace SwapFolders
             }
         }
 
-        string PathIcon(string path, string iconName)
-        {
-            return $@"{path}\{iconName}";
-        }
-
-        void RestartExplorer()
+        void RestartExplorer(string openFile)
         {
             Process[] explorer = Process.GetProcessesByName("explorer");
             foreach (Process process in explorer)
             {
                 process.Kill();
             }
-            Process.Start("explorer.exe");
+            Process.Start(new ProcessStartInfo { FileName = "explorer", Arguments = $"/n, /select, {openFile}"});
         }
 
         void SwapIcon(string path, ImageList il, ListView lv)
@@ -98,7 +93,12 @@ namespace SwapFolders
             folder.Attributes = folder.Attributes | FileAttributes.ReadOnly;
             File.SetAttributes(filePath, FileAttributes.Hidden | FileAttributes.System | FileAttributes.Archive);
 
-            RestartExplorer();
+            RestartExplorer(folder.FullName);
+        }
+
+        string PathIcon(string path, string iconName)
+        {
+            return $@"{path}\{iconName}";
         }
 
         //
