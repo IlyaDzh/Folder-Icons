@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace SwapFolders
 {
@@ -27,10 +21,11 @@ namespace SwapFolders
                 ChangeIcon(args[0], args[1]);
 
             InitList(PATH_COLORS, imageList1, listView1);
-            
             myIconsList.ImageSize = new Size(38, 38);
             myIconsList.ColorDepth = ColorDepth.Depth32Bit;
             InitList(PATH_MY_ICONS, myIconsList, listView2);
+
+            CheckRegistry();
         }
 
         void ChangeIcon(string pathFile, string pathIcon)
@@ -101,71 +96,30 @@ namespace SwapFolders
             return $@"{path}\{iconName}";
         }
 
-        //
-        // Controller
-        //
-
-        private void buttonApply_Click(object sender, EventArgs e)
+        void CheckRegistry()
         {
-            try
+            using (RegistryKey reg = Registry.ClassesRoot.OpenSubKey(@"Folder\shell\FolderIcons"))
             {
-                if (listView1.CanSelect)
-                    SwapIcon(PATH_COLORS, imageList1, listView1);
-                else if (listView2.CanSelect)
-                    SwapIcon(PATH_MY_ICONS, myIconsList, listView2);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (reg != null)
+                {
+                    addToolStripMenuItem.Enabled = false;
+                    deleteToolStripMenuItem.Enabled = true;
+                }
+                else
+                {
+                    addToolStripMenuItem.Enabled = true;
+                    deleteToolStripMenuItem.Enabled = false;
+                }
             }
         }
 
-        private void buttonOpenFIle_Click(object sender, EventArgs e)
+        void CreateSubKeyAndSetValue(string color, string pathKey, string pathIcon)
         {
-            FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
-            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-            {
-                textBoxFile.Text = folderBrowserDialog1.SelectedPath;
-            }
-        }
-
-        private void textBoxFile_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                e.Effect = DragDropEffects.Copy;
-            }
-        }
-
-        private void textBoxFile_DragDrop(object sender, DragEventArgs e)
-        {
-            string[] file = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (Directory.Exists(file[0]))
-                textBoxFile.Text = file[0];
-            else
-                MessageBox.Show("Это не папка!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-
-        private void buttonAdd_Click(object sender, EventArgs e)
-        {
-            //скопировать выбранный файл в папку
-            //обновить list
-            //listView2.LargeImageList = myIconsList;
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                //File.Copy(openFileDialog1.FileName, $@"{PATH_MY_ICONS}\{openFileDialog1.FileName}");
-                //myIconsList.Images.Add(Image.FromFile(openFileDialog1.FileName));
-            }
-            listView2.Clear();
-            for (int i = 0; i < myIconsList.Images.Count; i++)
-            {
-                listView2.Items.Add($"{i}", i);
-            }
-        }
-
-        private void buttonDelete_Click(object sender, EventArgs e)
-        {
-
+            RegistryKey keySubMenu = Registry.LocalMachine.CreateSubKey($@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\{pathKey}");
+            keySubMenu.SetValue("", color);
+            keySubMenu.SetValue("Icon", pathIcon);
+            keySubMenu = Registry.LocalMachine.CreateSubKey($@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\{pathKey}\command");
+            keySubMenu.SetValue("", $"{Path.GetDirectoryName(Application.ExecutablePath)}\\SwapFolders.exe \"%1\" \"{pathIcon}\"");
         }
     }
 }
