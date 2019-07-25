@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -50,57 +51,64 @@ namespace SwapFolders
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            //скопировать выбранный файл в папку
-            //обновить list
-            //listView2.LargeImageList = myIconsList;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                //File.Copy(openFileDialog1.FileName, $@"{PATH_MY_ICONS}\{openFileDialog1.FileName}");
-                //myIconsList.Images.Add(Image.FromFile(openFileDialog1.FileName));
+                if (!Directory.Exists(PATH_MY_ICONS))
+                    Directory.CreateDirectory(PATH_MY_ICONS);
+                foreach (var item in openFileDialog1.FileNames)
+                {
+                    if(!File.Exists($"{PATH_MY_ICONS}\\{Path.GetFileName(item)}"))
+                    {
+                        File.Copy(item, $"{PATH_MY_ICONS}\\{Path.GetFileName(item)}");
+                    }
+                }
             }
+            myIconsList.Images.Clear();
             listView2.Clear();
-            for (int i = 0; i < myIconsList.Images.Count; i++)
-            {
-                listView2.Items.Add($"{i}", i);
-            }
+            InitList(PATH_MY_ICONS, myIconsList, listView2);
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-
+            var key = myIconsList.Images.Keys[listView2.SelectedIndices[0]];
+            if (File.Exists($"{PATH_MY_ICONS}\\{key}"))
+                File.Delete($"{PATH_MY_ICONS}\\{key}");
+            myIconsList.Images.Clear();
+            listView2.Clear();
+            InitList(PATH_MY_ICONS, myIconsList, listView2);
         }
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (RegistryKey keyMenu = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\FolderIcons"))
             {
-                keyMenu.SetValue("Icon", $@"{Path.GetDirectoryName(Application.ExecutablePath)}\IconProgram.ico");
+                keyMenu.SetValue("Icon", $@"{PATH_EXE}\IconProgram.ico");
                 keyMenu.SetValue("MUIVerb", "Изменить цвет папки");
                 keyMenu.SetValue("SubCommands", "IconsProgram;f1;f2;f3;f4;f5;f6;f7;f8;f9;f10;f11;f12;f13;f14;f15;");
             }
 
             RegistryKey keySubMenu = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\IconsProgram");
             keySubMenu.SetValue("", "Open the program");
-            keySubMenu.SetValue("Icon", $@"{Path.GetDirectoryName(Application.ExecutablePath)}\IconProgram.ico");
+            keySubMenu.SetValue("Icon", $@"{PATH_EXE}\IconProgram.ico");
             keySubMenu.SetValue("CommandFlags", 0x40, RegistryValueKind.DWord);
             keySubMenu = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\IconsProgram\command");
-            keySubMenu.SetValue("", $"{Path.GetDirectoryName(Application.ExecutablePath)}\\SwapFolders.exe \"%1\"");
+            keySubMenu.SetValue("", $"{PATH_EXE}\\SwapFolders.exe \"%1\"");
 
-            CreateSubKeyAndSetValue("Blue", "f1", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Ablue.ico");
-            CreateSubKeyAndSetValue("Coffee", "f2", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Acoffee.ico");
-            CreateSubKeyAndSetValue("Dark gray", "f3", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Adark gray.ico");
-            CreateSubKeyAndSetValue("Gray", "f4", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Agray.ico");
-            CreateSubKeyAndSetValue("Green", "f5", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Agreen.ico");
-            CreateSubKeyAndSetValue("Lime", "f6", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Alime.ico");
-            CreateSubKeyAndSetValue("Maroon", "f7", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Amaroon.ico");
-            CreateSubKeyAndSetValue("Navy", "f8", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Anavy.ico");
-            CreateSubKeyAndSetValue("Orange", "f9", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Aorange.ico");
-            CreateSubKeyAndSetValue("Pink", "f10", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Apink.ico");
-            CreateSubKeyAndSetValue("Purple", "f11", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Apurple.ico");
-            CreateSubKeyAndSetValue("Race blue", "f12", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Arace blue.ico");
-            CreateSubKeyAndSetValue("Red", "f13", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Ared.ico");
-            CreateSubKeyAndSetValue("White", "f14", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Awhite.ico");
-            CreateSubKeyAndSetValue("Yellow", "f15", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Ayellow.ico");
+            CreateSubKeyAndSetValue("Blue", "f1", $"{PATH_EXE}\\Icons\\Colors\\Ablue.ico");
+            CreateSubKeyAndSetValue("Coffee", "f2", $"{PATH_EXE}\\Icons\\Colors\\Acoffee.ico");
+            CreateSubKeyAndSetValue("Dark gray", "f3", $"{PATH_EXE}\\Icons\\Colors\\Adark gray.ico");
+            CreateSubKeyAndSetValue("Gray", "f4", $"{PATH_EXE}\\Icons\\Colors\\Agray.ico");
+            CreateSubKeyAndSetValue("Green", "f5", $"{PATH_EXE}\\Icons\\Colors\\Agreen.ico");
+            CreateSubKeyAndSetValue("Lime", "f6", $"{PATH_EXE}\\Icons\\Colors\\Alime.ico");
+            CreateSubKeyAndSetValue("Maroon", "f7", $"{PATH_EXE}\\Icons\\Colors\\Amaroon.ico");
+            CreateSubKeyAndSetValue("Navy", "f8", $"{PATH_EXE}\\Icons\\Colors\\Anavy.ico");
+            CreateSubKeyAndSetValue("Orange", "f9", $"{PATH_EXE}\\Icons\\Colors\\Aorange.ico");
+            CreateSubKeyAndSetValue("Pink", "f10", $"{PATH_EXE}\\Icons\\Colors\\Apink.ico");
+            CreateSubKeyAndSetValue("Purple", "f11", $"{PATH_EXE}\\Icons\\Colors\\Apurple.ico");
+            CreateSubKeyAndSetValue("Race blue", "f12", $"{PATH_EXE}\\Icons\\Colors\\Arace blue.ico");
+            CreateSubKeyAndSetValue("Red", "f13", $"{PATH_EXE}\\Icons\\Colors\\Ared.ico");
+            CreateSubKeyAndSetValue("White", "f14", $"{PATH_EXE}\\Icons\\Colors\\Awhite.ico");
+            CreateSubKeyAndSetValue("Yellow", "f15", $"{PATH_EXE}\\Icons\\Colors\\Ayellow.ico");
 
             addToolStripMenuItem.Enabled = false;
             deleteToolStripMenuItem.Enabled = true;

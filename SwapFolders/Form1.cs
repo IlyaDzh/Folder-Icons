@@ -8,8 +8,9 @@ namespace SwapFolders
 {
     public partial class Form1 : Form
     {
-        public readonly string PATH_COLORS = @"D:\WindowsForms\SwapFolders\SwapFolders\Icons\Colors";
-        public readonly string PATH_MY_ICONS = @"D:\WindowsForms\SwapFolders\SwapFolders\Icons\My icons";
+        public static readonly string PATH_EXE = Path.GetDirectoryName(Application.ExecutablePath);
+        public readonly string PATH_COLORS = $@"{PATH_EXE}\Icons\Colors";
+        public readonly string PATH_MY_ICONS = $@"{PATH_EXE}\Icons\My icons";
         ImageList myIconsList = new ImageList();
         string filePath = "";
 
@@ -17,11 +18,11 @@ namespace SwapFolders
         {
             InitializeComponent();
             
-            if (args.Length == 2)
-                ChangeIcon(args[0], args[1]);
+            if (args.Length == 2) ChangeIcon(args[0], args[1]);
+            if (args.Length == 1) textBoxFile.Text = args[0];
 
-            if (args.Length == 1)
-                textBoxFile.Text = args[0];
+            if (!Directory.Exists(PATH_MY_ICONS)) Directory.CreateDirectory(PATH_MY_ICONS);
+            if (!Directory.Exists(PATH_COLORS)) Directory.CreateDirectory(PATH_COLORS);
 
             InitList(PATH_COLORS, imageList1, listView1);
             myIconsList.ImageSize = new Size(38, 38);
@@ -122,7 +123,7 @@ namespace SwapFolders
             keySubMenu.SetValue("", color);
             keySubMenu.SetValue("Icon", pathIcon);
             keySubMenu = Registry.LocalMachine.CreateSubKey($@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\{pathKey}\command");
-            keySubMenu.SetValue("", $"{Path.GetDirectoryName(Application.ExecutablePath)}\\SwapFolders.exe \"%1\" \"{pathIcon}\"");
+            keySubMenu.SetValue("", $"{PATH_EXE}\\SwapFolders.exe \"%1\" \"{pathIcon}\"");
         }
     }
 }
