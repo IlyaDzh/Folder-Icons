@@ -76,29 +76,31 @@ namespace SwapFolders
             {
                 keyMenu.SetValue("Icon", $@"{Path.GetDirectoryName(Application.ExecutablePath)}\IconProgram.ico");
                 keyMenu.SetValue("MUIVerb", "Изменить цвет папки");
-                keyMenu.SetValue("SubCommands", "f1;f2;f3;f4;f5;f6;f7;f8;f9;f10;f11;f12;f13;f14;f15;f16;f17;f18;f19;f20");
+                keyMenu.SetValue("SubCommands", "IconsProgram;f1;f2;f3;f4;f5;f6;f7;f8;f9;f10;f11;f12;f13;f14;f15;");
             }
+
+            RegistryKey keySubMenu = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\IconsProgram");
+            keySubMenu.SetValue("", "Open the program");
+            keySubMenu.SetValue("Icon", $@"{Path.GetDirectoryName(Application.ExecutablePath)}\IconProgram.ico");
+            keySubMenu.SetValue("CommandFlags", 0x40, RegistryValueKind.DWord);
+            keySubMenu = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\IconsProgram\command");
+            keySubMenu.SetValue("", $"{Path.GetDirectoryName(Application.ExecutablePath)}\\SwapFolders.exe \"%1\"");
 
             CreateSubKeyAndSetValue("Blue", "f1", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Ablue.ico");
             CreateSubKeyAndSetValue("Coffee", "f2", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Acoffee.ico");
             CreateSubKeyAndSetValue("Dark gray", "f3", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Adark gray.ico");
             CreateSubKeyAndSetValue("Gray", "f4", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Agray.ico");
             CreateSubKeyAndSetValue("Green", "f5", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Agreen.ico");
-            CreateSubKeyAndSetValue("Light blue", "f6", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Alight blue.ico");
-            CreateSubKeyAndSetValue("Lime", "f7", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Alime.ico");
-            CreateSubKeyAndSetValue("Maroon", "f8", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Amaroon.ico");
-            CreateSubKeyAndSetValue("Mint", "f9", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Amint.ico");
-            CreateSubKeyAndSetValue("Navy", "f10", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Anavy.ico");
-            CreateSubKeyAndSetValue("Olive", "f11", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Aolive.ico");
-            CreateSubKeyAndSetValue("Orange", "f12", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Aorange.ico");
-            CreateSubKeyAndSetValue("Pink", "f13", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Apink.ico");
-            CreateSubKeyAndSetValue("Purple", "f14", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Apurple.ico");
-            CreateSubKeyAndSetValue("Race blue", "f15", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Arace blue.ico");
-            CreateSubKeyAndSetValue("Red", "f16", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Ared.ico");
-            CreateSubKeyAndSetValue("Space", "f17", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Aspace.ico");
-            CreateSubKeyAndSetValue("Teal", "f18", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Ateal.ico");
-            CreateSubKeyAndSetValue("White", "f19", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Awhite.ico");
-            CreateSubKeyAndSetValue("Yellow", "f20", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Ayellow.ico");
+            CreateSubKeyAndSetValue("Lime", "f6", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Alime.ico");
+            CreateSubKeyAndSetValue("Maroon", "f7", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Amaroon.ico");
+            CreateSubKeyAndSetValue("Navy", "f8", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Anavy.ico");
+            CreateSubKeyAndSetValue("Orange", "f9", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Aorange.ico");
+            CreateSubKeyAndSetValue("Pink", "f10", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Apink.ico");
+            CreateSubKeyAndSetValue("Purple", "f11", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Apurple.ico");
+            CreateSubKeyAndSetValue("Race blue", "f12", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Arace blue.ico");
+            CreateSubKeyAndSetValue("Red", "f13", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Ared.ico");
+            CreateSubKeyAndSetValue("White", "f14", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Awhite.ico");
+            CreateSubKeyAndSetValue("Yellow", "f15", "D:\\WindowsForms\\SwapFolders\\SwapFolders\\Icons\\Colors\\Ayellow.ico");
 
             addToolStripMenuItem.Enabled = false;
             deleteToolStripMenuItem.Enabled = true;
@@ -107,6 +109,11 @@ namespace SwapFolders
         private void deleteToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             Registry.ClassesRoot.DeleteSubKey(@"Folder\shell\FolderIcons");
+            Registry.LocalMachine.DeleteSubKeyTree(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\IconsProgram");
+            for (int i = 1; i < 16; i++)
+            {
+                Registry.LocalMachine.DeleteSubKeyTree($@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\f{i}");
+            }
             addToolStripMenuItem.Enabled = true;
             deleteToolStripMenuItem.Enabled = false;
         }

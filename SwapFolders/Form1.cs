@@ -17,8 +17,11 @@ namespace SwapFolders
         {
             InitializeComponent();
             
-            if (args.Length > 0)
+            if (args.Length == 2)
                 ChangeIcon(args[0], args[1]);
+
+            if (args.Length == 1)
+                textBoxFile.Text = args[0];
 
             InitList(PATH_COLORS, imageList1, listView1);
             myIconsList.ImageSize = new Size(38, 38);
