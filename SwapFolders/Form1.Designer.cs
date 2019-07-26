@@ -1,4 +1,4 @@
-﻿namespace SwapFolders
+﻿namespace FolderIcons
 {
     partial class Form1
     {
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.textBoxFile = new System.Windows.Forms.TextBox();
             this.buttonApply = new System.Windows.Forms.Button();
             this.buttonOpenFIle = new System.Windows.Forms.Button();
@@ -215,7 +216,7 @@
             this.rusToolStripMenuItem,
             this.engToolStripMenuItem});
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            this.languageToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.languageToolStripMenuItem.Text = "Language";
             // 
             // rusToolStripMenuItem
@@ -236,20 +237,20 @@
             this.addToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contexMenuToolStripMenuItem.Name = "contexMenuToolStripMenuItem";
-            this.contexMenuToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.contexMenuToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.contexMenuToolStripMenuItem.Text = "Contex menu";
             // 
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -275,6 +276,7 @@
             this.Controls.Add(this.buttonApply);
             this.Controls.Add(this.textBoxFile);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
@@ -282,6 +284,7 @@
             this.Opacity = 0.93D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Folder Icons";
+            this.TopMost = true;
             this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);

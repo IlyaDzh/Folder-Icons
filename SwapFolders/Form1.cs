@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace SwapFolders
+namespace FolderIcons
 {
     public partial class Form1 : Form
     {
@@ -123,7 +123,12 @@ namespace SwapFolders
             keySubMenu.SetValue("", color);
             keySubMenu.SetValue("Icon", pathIcon);
             keySubMenu = Registry.LocalMachine.CreateSubKey($@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\{pathKey}\command");
-            keySubMenu.SetValue("", $"{PATH_EXE}\\SwapFolders.exe \"%1\" \"{pathIcon}\"");
+            keySubMenu.SetValue("", $"{PATH_EXE}\\FolderIcons.exe \"%1\" \"{pathIcon}\"");
+        }
+
+        private void buttonOpenFIle_Click(object sender, System.EventArgs e)
+        {
+
         }
     }
 }

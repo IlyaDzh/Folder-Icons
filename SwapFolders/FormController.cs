@@ -1,10 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace SwapFolders
+namespace FolderIcons
 {
     public partial class Form1
     {
@@ -92,7 +91,7 @@ namespace SwapFolders
             keySubMenu.SetValue("Icon", $@"{PATH_EXE}\IconProgram.ico");
             keySubMenu.SetValue("CommandFlags", 0x40, RegistryValueKind.DWord);
             keySubMenu = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\IconsProgram\command");
-            keySubMenu.SetValue("", $"{PATH_EXE}\\SwapFolders.exe \"%1\"");
+            keySubMenu.SetValue("", $"{PATH_EXE}\\FolderIcons.exe \"%1\"");
 
             CreateSubKeyAndSetValue("Blue", "f1", $"{PATH_EXE}\\Icons\\Colors\\Ablue.ico");
             CreateSubKeyAndSetValue("Coffee", "f2", $"{PATH_EXE}\\Icons\\Colors\\Acoffee.ico");
