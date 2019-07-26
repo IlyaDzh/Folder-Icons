@@ -125,10 +125,5 @@ namespace FolderIcons
             keySubMenu = Registry.LocalMachine.CreateSubKey($@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\{pathKey}\command");
             keySubMenu.SetValue("", $"{PATH_EXE}\\FolderIcons.exe \"%1\" \"{pathIcon}\"");
         }
-
-        private void buttonOpenFIle_Click(object sender, System.EventArgs e)
-        {
-
-        }
     }
 }

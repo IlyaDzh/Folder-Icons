@@ -216,7 +216,7 @@
             this.rusToolStripMenuItem,
             this.engToolStripMenuItem});
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            this.languageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.languageToolStripMenuItem.Text = "Language";
             // 
             // rusToolStripMenuItem
@@ -237,20 +237,20 @@
             this.addToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contexMenuToolStripMenuItem.Name = "contexMenuToolStripMenuItem";
-            this.contexMenuToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contexMenuToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.contexMenuToolStripMenuItem.Text = "Contex menu";
             // 
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
