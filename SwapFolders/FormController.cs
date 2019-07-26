@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace FolderIcons
@@ -70,8 +72,24 @@ namespace FolderIcons
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             var key = myIconsList.Images.Keys[listView2.SelectedIndices[0]];
-            if (File.Exists($"{PATH_MY_ICONS}\\{key}"))
-                File.Delete($"{PATH_MY_ICONS}\\{key}");
+
+            try
+            {
+                if (File.Exists($"{PATH_MY_ICONS}\\{key}"))
+                    File.Delete($"{PATH_MY_ICONS}\\{key}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            myIconsList.Images.Clear();
+            listView2.Clear();
+            InitList(PATH_MY_ICONS, myIconsList, listView2);
+        }
+
+        private void buttonUpdate_Click(object sender, System.EventArgs e)
+        {
             myIconsList.Images.Clear();
             listView2.Clear();
             InitList(PATH_MY_ICONS, myIconsList, listView2);
@@ -81,14 +99,14 @@ namespace FolderIcons
         {
             using (RegistryKey keyMenu = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\FolderIcons"))
             {
-                keyMenu.SetValue("Icon", $@"{PATH_EXE}\IconProgram.ico");
+                keyMenu.SetValue("Icon", $"\"{PATH_EXE}\\Icons\\IconProgram.ico\"");
                 keyMenu.SetValue("MUIVerb", "Изменить цвет папки");
                 keyMenu.SetValue("SubCommands", "IconsProgram;f1;f2;f3;f4;f5;f6;f7;f8;f9;f10;f11;f12;f13;f14;f15;");
             }
 
             RegistryKey keySubMenu = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\IconsProgram");
             keySubMenu.SetValue("", "Open the program");
-            keySubMenu.SetValue("Icon", $@"{PATH_EXE}\IconProgram.ico");
+            keySubMenu.SetValue("Icon", $"\"{PATH_EXE}\\Icons\\IconProgram.ico\"");
             keySubMenu.SetValue("CommandFlags", 0x40, RegistryValueKind.DWord);
             keySubMenu = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\IconsProgram\command");
             keySubMenu.SetValue("", $"{PATH_EXE}\\FolderIcons.exe \"%1\"");
@@ -123,6 +141,16 @@ namespace FolderIcons
             }
             addToolStripMenuItem.Enabled = true;
             deleteToolStripMenuItem.Enabled = false;
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            MessageBox.Show("FolderIcons v1.0 by IlyaD", "About program", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
+        }
+
+        private void folderToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            Process.Start(new ProcessStartInfo { FileName = "explorer", Arguments = $"/n, /select, {PATH_EXE}" });
         }
     }
 }
