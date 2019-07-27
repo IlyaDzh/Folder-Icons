@@ -37,6 +37,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.listView1 = new System.Windows.Forms.ListView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.listView3 = new System.Windows.Forms.ListView();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
@@ -53,9 +55,11 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonDefault = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,6 +105,7 @@
             // 
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Controls.Add(this.tabPage3);
             this.tabControl.Font = new System.Drawing.Font("Bookman Old Style", 9.75F);
             this.tabControl.ItemSize = new System.Drawing.Size(42, 22);
             this.tabControl.Location = new System.Drawing.Point(13, 119);
@@ -132,17 +137,37 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.buttonUpdate);
-            this.tabPage2.Controls.Add(this.buttonDelete);
-            this.tabPage2.Controls.Add(this.buttonAdd);
-            this.tabPage2.Controls.Add(this.listView2);
+            this.tabPage2.Controls.Add(this.listView3);
             this.tabPage2.Location = new System.Drawing.Point(4, 26);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(351, 311);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "My icons";
+            this.tabPage2.TabIndex = 2;
+            this.tabPage2.Text = "Additional";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // listView3
+            // 
+            this.listView3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listView3.Location = new System.Drawing.Point(3, 3);
+            this.listView3.Name = "listView3";
+            this.listView3.Size = new System.Drawing.Size(345, 305);
+            this.listView3.TabIndex = 0;
+            this.listView3.UseCompatibleStateImageBehavior = false;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.buttonUpdate);
+            this.tabPage3.Controls.Add(this.buttonDelete);
+            this.tabPage3.Controls.Add(this.buttonAdd);
+            this.tabPage3.Controls.Add(this.listView2);
+            this.tabPage3.Location = new System.Drawing.Point(4, 26);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(351, 311);
+            this.tabPage3.TabIndex = 1;
+            this.tabPage3.Text = "My icons";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // buttonUpdate
             // 
@@ -282,11 +307,25 @@
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // buttonDefault
+            // 
+            this.buttonDefault.BackColor = System.Drawing.Color.PeachPuff;
+            this.buttonDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDefault.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonDefault.Location = new System.Drawing.Point(12, 466);
+            this.buttonDefault.Name = "buttonDefault";
+            this.buttonDefault.Size = new System.Drawing.Size(92, 26);
+            this.buttonDefault.TabIndex = 8;
+            this.buttonDefault.Text = "Default icon";
+            this.buttonDefault.UseVisualStyleBackColor = false;
+            this.buttonDefault.Click += new System.EventHandler(this.buttonDefault_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(380, 520);
+            this.Controls.Add(this.buttonDefault);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.buttonOpenFIle);
             this.Controls.Add(this.buttonApply);
@@ -304,6 +343,7 @@
             this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -318,7 +358,7 @@
         private System.Windows.Forms.Button buttonOpenFIle;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ListView listView2;
@@ -336,6 +376,9 @@
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.Button buttonUpdate;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ListView listView3;
+        private System.Windows.Forms.Button buttonDefault;
     }
 }
 

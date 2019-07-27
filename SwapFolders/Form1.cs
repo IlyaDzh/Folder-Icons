@@ -10,8 +10,10 @@ namespace FolderIcons
     {
         public static readonly string PATH_EXE = Path.GetDirectoryName(Application.ExecutablePath);
         public readonly string PATH_COLORS = $@"{PATH_EXE}\Icons\Colors";
+        public readonly string PATH_ADDITIONAl = $@"{PATH_EXE}\Icons\Additional";
         public readonly string PATH_MY_ICONS = $@"{PATH_EXE}\Icons\My icons";
         ImageList myIconsList = new ImageList();
+        ImageList additionalList = new ImageList();
         string filePath = "";
 
         public Form1(string[] args)
@@ -25,6 +27,9 @@ namespace FolderIcons
             if (!Directory.Exists(PATH_COLORS)) Directory.CreateDirectory(PATH_COLORS);
 
             InitList(PATH_COLORS, imageList1, listView1);
+            additionalList.ImageSize = new Size(38, 38);
+            additionalList.ColorDepth = ColorDepth.Depth32Bit;
+            InitList(PATH_ADDITIONAl, additionalList, listView3);
             myIconsList.ImageSize = new Size(38, 38);
             myIconsList.ColorDepth = ColorDepth.Depth32Bit;
             InitList(PATH_MY_ICONS, myIconsList, listView2);
@@ -58,7 +63,8 @@ namespace FolderIcons
             {
                 try
                 {
-                    il.Images.Add(file.Name, Image.FromFile(file.FullName));
+                    if (Path.GetExtension(file.FullName)==".ico")
+                        il.Images.Add(file.Name, Image.FromFile(file.FullName));
                 }
                 catch { }
             }
@@ -78,7 +84,7 @@ namespace FolderIcons
             Process.Start(new ProcessStartInfo { FileName = "explorer", Arguments = $"/n, /select, {openFile}"});
         }
 
-        void SwapIcon(string path, ImageList il, ListView lv)
+        void ChangeIcon(string path, ImageList il, ListView lv)
         {
             DirectoryInfo folder = new DirectoryInfo($@"{textBoxFile.Text}\");
             filePath = folder.FullName + "desktop.ini";
